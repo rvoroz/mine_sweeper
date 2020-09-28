@@ -1,6 +1,10 @@
 package com.minesweeper.api.model.common;
 
+import java.util.List;
+
 public class Field {
     private int totalCells;
-    private List<Cells> cells;
+    private int rows;
+    private int columns;
+    private List<Cell> cells;
 }

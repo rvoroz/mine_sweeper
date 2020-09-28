@@ -1,12 +1,14 @@
 package com.minesweeper.api.model.common;
 
 import java.time.LocalTime;
+import java.util.List;
 
 public class Game {
     private String id;
     private String userId;
     private GameConfig config;
     private LocalTime startDate;
+    private List<Cell> mines;
 
     public String getId() {
         return id;
@@ -38,6 +40,14 @@ public class Game {
 
     public void setStartDate(LocalTime startDate) {
         this.startDate = startDate;
+    }
+
+    public List<Cell> getMines() {
+        return mines;
+    }
+
+    public void setMines(List<Cell> mines) {
+        this.mines = mines;
     }
 
     

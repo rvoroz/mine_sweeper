@@ -15,7 +15,7 @@ public class GameServiceImpl implements GameService {
         return gameFactory.userId(gameRequest.getUserId())
         .gameConfig(gameRequest.getGameConfig()).build();
 
-        // TODO Persiste the game
+        // TODO Persist the game
     }
     
 }

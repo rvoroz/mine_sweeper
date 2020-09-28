@@ -13,6 +13,17 @@ public class Cell {
     private CellType down;
     private CellType right;
 
+    public Cell(){
+        // Empty Constructor
+    }
+
+    public Cell(CellType cellType, int cellNumber, int xPos, int yPos) {
+        this.cellType = cellType;
+        this.cellNumber = cellNumber;
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
+
     public CellType getCellType() {
         return cellType;
     }
@@ -100,6 +111,4 @@ public class Cell {
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
-
-    
 }
