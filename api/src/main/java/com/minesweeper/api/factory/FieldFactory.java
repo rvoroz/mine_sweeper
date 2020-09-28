@@ -3,6 +3,7 @@ package com.minesweeper.api.factory;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.minesweeper.api.factory.consumer.CellConsumer;
 import com.minesweeper.api.model.common.Cell;
 import com.minesweeper.api.model.common.CellType;
 import com.minesweeper.api.model.common.Field;
@@ -22,6 +23,7 @@ public class FieldFactory {
         this.newField.setColumns(game.getConfig().getColumns());
         this.newField.setTotalCells(game.getConfig().getTotalCells());
         this.newField.setCells(buildFieldCells(game));
+        this.setCellsLabels();
         return this.newField;
     }
 
@@ -38,5 +40,10 @@ public class FieldFactory {
         }
 
         return fieldCells;
+    }
+
+    private void setCellsLabels(){
+        CellConsumer cellConsumer = new CellConsumer(this.newField.getCells(), this.newField.getRows(), this.newField.getColumns());
+        this.newField.getCells().forEach(cellConsumer);
     }
 }

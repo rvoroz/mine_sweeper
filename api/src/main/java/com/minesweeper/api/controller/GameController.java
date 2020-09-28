@@ -21,13 +21,18 @@ public class GameController {
         return gameService.startGame(gameRequest);
     }
 
+    @RequestMapping(path = "/pause", method = RequestMethod.GET)
+    public String pause(){
+        return "game paused";
+    }
+
     @RequestMapping(path = "/resume", method = RequestMethod.GET)
     public String resume(){
         return "game resumed";
     }
 
-    @RequestMapping(path = "/dig", method = RequestMethod.GET)
-    public String dig(){
+    @PostMapping(path = "/dig", consumes = "application/json", produces = "application/json")
+    public Object dig(){
         return "cell opened";
     }
 
