@@ -1,11 +1,12 @@
-package com.minesweeper.api.model.database;
+package com.minesweeper.api.model.common;
 
-import com.minesweeper.api.model.common.GameConfig;
+import java.time.LocalTime;
 
 public class Game {
     private String id;
     private String userId;
     private GameConfig config;
+    private LocalTime startDate;
 
     public String getId() {
         return id;
@@ -30,4 +31,14 @@ public class Game {
     public void setConfig(GameConfig config) {
         this.config = config;
     }
+
+    public LocalTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalTime startDate) {
+        this.startDate = startDate;
+    }
+
+    
 }

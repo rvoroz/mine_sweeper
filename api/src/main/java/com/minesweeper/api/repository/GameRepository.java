@@ -1,6 +1,6 @@
 package com.minesweeper.api.repository;
 
-import com.minesweeper.api.model.database.Game;
+import com.minesweeper.api.model.common.Game;
 
 public interface GameRepository {
     public Game getGameById(String id);

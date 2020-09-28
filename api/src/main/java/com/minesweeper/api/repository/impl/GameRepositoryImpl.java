@@ -1,6 +1,6 @@
 package com.minesweeper.api.repository.impl;
 
-import com.minesweeper.api.model.database.Game;
+import com.minesweeper.api.model.common.Game;
 import com.minesweeper.api.repository.GameRepository;
 
 public class GameRepositoryImpl implements GameRepository {
