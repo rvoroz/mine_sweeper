@@ -29,12 +29,15 @@ public class FieldFactory {
         final List<Cell> fieldCells = new ArrayList<>();
         for(int i = 0; i < game.getConfig().getTotalCells(); i++){
             final int currentCell = i;
-            final Cell mine = game.getMines().stream().filter(m -> m.getCellNumber() == currentCell).findFirst().orElse(null);
-            if(mine != null){
-                fieldCells.add(mine);
-            } else {
-                fieldCells.add(new Cell(CellType.BLANK, i));
+            Cell newCell;
+            newCell = game.getMines().stream().filter(m -> m.getCellNumber() == currentCell).findFirst().orElse(null);
+            if(newCell == null){
+               newCell = new Cell(CellType.BLANK, i);
             }
+            if(game.getOpenedCells().contains(i)){
+                newCell.setOpen(true);
+            }
+            fieldCells.add(newCell);
         }
 
         return fieldCells;

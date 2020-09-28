@@ -1,7 +1,6 @@
 package com.minesweeper.api.service.impl;
 
 import java.time.LocalDateTime;
-
 import com.minesweeper.api.factory.FieldFactory;
 import com.minesweeper.api.factory.GameFactory;
 import com.minesweeper.api.model.common.Field;
