@@ -35,7 +35,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public PauseResumeResponse pauseGame(String gameId) {
         Game game = gameRepository.findById(gameId).orElse(null);
-        if (game == null) return null;
+        if (game == null || game.getStatus() != GameStatus.IN_PROGRESS) return null;
         game.setPauseDate(LocalDateTime.now());
         game.setStatus(GameStatus.PAUSED);
         gameRepository.save(game);
@@ -45,8 +45,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public GameResponse resumeGame(String gameId) {
         Game game = gameRepository.findById(gameId).orElse(null);
-        if (game == null) return null;
-
+        if (game == null || game.getStatus() != GameStatus.PAUSED) return null;
+        game.setStatus(GameStatus.IN_PROGRESS);
         final FieldFactory fieldFactory = new FieldFactory();
         Field field = fieldFactory.build(game);
         return new GameResponse(game.getId(), game.getUserId(), field);

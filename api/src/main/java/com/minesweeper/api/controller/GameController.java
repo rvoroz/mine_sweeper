@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.minesweeper.api.model.common.enums.GameAction;
 import com.minesweeper.api.model.request.DigRequest;
 import com.minesweeper.api.model.request.GameRequest;
 import com.minesweeper.api.model.response.GameResponse;
@@ -38,8 +36,8 @@ public class GameController {
     }
 
     @GetMapping(path = "/resume/{gameId}", produces = "application/json")
-    public ResponseEntity<PauseResumeResponse> resume(@PathVariable("gameId") String gameId){
-        PauseResumeResponse response = gameService.resumeGame(gameId);
+    public ResponseEntity<GameResponse> resume(@PathVariable("gameId") String gameId){
+        GameResponse response = gameService.resumeGame(gameId);
         if(response == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(response);
     }
