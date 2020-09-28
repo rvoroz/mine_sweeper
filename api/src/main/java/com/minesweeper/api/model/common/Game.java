@@ -11,6 +11,7 @@ public class Game {
     private String userId;
     private GameConfig config;
     private LocalDateTime startDate;
+    private LocalDateTime pauseDate;
     private LocalDateTime endDateTime;
     private List<Cell> mines;
     private List<Integer> openedCells;
@@ -78,6 +79,14 @@ public class Game {
 
     public void setStatus(GameStatus status) {
         this.status = status;
+    }
+
+    public LocalDateTime getPauseDate() {
+        return pauseDate;
+    }
+
+    public void setPauseDate(LocalDateTime pauseDate) {
+        this.pauseDate = pauseDate;
     }
 
     

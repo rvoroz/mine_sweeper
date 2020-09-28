@@ -1,14 +1,21 @@
 package com.minesweeper.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.minesweeper.api.model.common.enums.GameAction;
 import com.minesweeper.api.model.request.DigRequest;
 import com.minesweeper.api.model.request.GameRequest;
+import com.minesweeper.api.model.response.GameResponse;
+import com.minesweeper.api.model.response.PauseResumeResponse;
 import com.minesweeper.api.service.GameService;
 
 @RestController
@@ -18,19 +25,23 @@ public class GameController {
     private GameService gameService;
 
     @PostMapping(path = "/start", consumes = "application/json", produces = "application/json")
-    public Object start(@RequestBody GameRequest gameRequest){
-        
-        return gameService.startGame(gameRequest);
+    public ResponseEntity<GameResponse> start(@RequestBody GameRequest gameRequest){
+        GameResponse response = gameService.startGame(gameRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @RequestMapping(path = "/pause", method = RequestMethod.GET)
-    public String pause(){
-        return "game paused";
+    @GetMapping(path = "/pause/{gameId}", produces = "application/json")
+    public ResponseEntity<PauseResumeResponse> pause(@PathVariable("gameId") String gameId){
+        PauseResumeResponse response = gameService.pauseGame(gameId);
+        if(response == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(path = "/resume", method = RequestMethod.GET)
-    public String resume(){
-        return "game resumed";
+    @GetMapping(path = "/resume/{gameId}", produces = "application/json")
+    public ResponseEntity<PauseResumeResponse> resume(@PathVariable("gameId") String gameId){
+        PauseResumeResponse response = gameService.resumeGame(gameId);
+        if(response == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(path = "/dig", consumes = "application/json", produces = "application/json")

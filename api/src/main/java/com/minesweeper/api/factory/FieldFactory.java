@@ -17,8 +17,6 @@ public class FieldFactory {
     }
 
     public Field build(final Game  game){
-        this.newField.setGameId(game.getId());
-        this.newField.setUserId(game.getUserId());
         this.newField.setRows(game.getConfig().getRows());
         this.newField.setColumns(game.getConfig().getColumns());
         this.newField.setTotalCells(game.getConfig().getTotalCells());

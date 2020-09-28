@@ -3,28 +3,11 @@ package com.minesweeper.api.model.common;
 import java.util.List;
 
 public class Field {
-    private String gameId;
-    private String userId;
+    
     private int totalCells;
     private int rows;
     private int columns;
     private List<Cell> cells;
-
-    public String getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(String gameId) {
-        this.gameId = gameId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public int getTotalCells() {
         return totalCells;
