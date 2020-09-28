@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.minesweeper.api.model.request.DigRequest;
 import com.minesweeper.api.model.request.GameRequest;
 import com.minesweeper.api.service.GameService;
 
@@ -32,7 +34,7 @@ public class GameController {
     }
 
     @PostMapping(path = "/dig", consumes = "application/json", produces = "application/json")
-    public Object dig(){
+    public Object dig(@RequestBody DigRequest digRequest){
         return "cell opened";
     }
 

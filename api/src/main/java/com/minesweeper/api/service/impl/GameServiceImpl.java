@@ -5,11 +5,16 @@ import com.minesweeper.api.factory.GameFactory;
 import com.minesweeper.api.model.common.Field;
 import com.minesweeper.api.model.common.Game;
 import com.minesweeper.api.model.request.GameRequest;
+import com.minesweeper.api.repository.GameRepository;
 import com.minesweeper.api.service.GameService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GameServiceImpl implements GameService {
+    @Autowired
+    private GameRepository gameRepository;
 
     @Override
     public Field startGame(final GameRequest gameRequest) {
@@ -18,6 +23,8 @@ public class GameServiceImpl implements GameService {
 
         Game newGame = gameFactory.setUserId(gameRequest.getUserId())
         .setGameConfig(gameRequest.getGameConfig()).build();
+
+        gameRepository.save(newGame);
 
         return fieldFactory.build(newGame);
 

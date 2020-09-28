@@ -3,12 +3,16 @@ package com.minesweeper.api.model.common;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+
 public class Game {
+    @Id
     private String id;
     private String userId;
     private GameConfig config;
     private LocalDateTime startDate;
     private List<Cell> mines;
+    private List<Integer> openedCells;
 
     public String getId() {
         return id;
@@ -48,6 +52,14 @@ public class Game {
 
     public void setMines(List<Cell> mines) {
         this.mines = mines;
+    }
+
+    public List<Integer> getOpenedCells() {
+        return openedCells;
+    }
+
+    public void setOpenedCells(List<Integer> openedCells) {
+        this.openedCells = openedCells;
     }
 
     
