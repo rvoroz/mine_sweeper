@@ -1,6 +1,6 @@
 package com.minesweeper.api.factory;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,8 +10,6 @@ import com.minesweeper.api.model.common.CellType;
 import com.minesweeper.api.model.common.Game;
 import com.minesweeper.api.model.common.GameConfig;
 
-import org.apache.tomcat.jni.Local;
-
 public class GameFactory {
     private final Game newGame;
     private final Random random = new Random();
@@ -20,12 +18,12 @@ public class GameFactory {
         this.newGame = new Game();
     }
 
-    public GameFactory userId(final String userId) {
+    public GameFactory setUserId(final String userId) {
         this.newGame.setUserId(userId);
         return this;
     }
 
-    public GameFactory gameConfig(final GameConfig gameConfig) {
+    public GameFactory setGameConfig(final GameConfig gameConfig) {
         this.newGame.setConfig(gameConfig);
         return this;
     }
@@ -34,7 +32,7 @@ public class GameFactory {
         final UUID uuid = UUID.randomUUID();
         this.newGame.setId(uuid.toString());
         this.newGame.setMines(this.getMines());
-        this.newGame.setStartDate(LocalTime.now());
+        this.newGame.setStartDate(LocalDateTime.now());
         return this.newGame;
     }
 
@@ -43,12 +41,10 @@ public class GameFactory {
         final GameConfig config = this.newGame.getConfig();
 
         while (mines.size() < config.getMines()){
-            final int randCell = this.random.nextInt(config.getTotalCells() + 1);
+            final int randCell = this.random.nextInt(config.getTotalCells());
             final Cell existingMine = mines.stream().filter(m -> m.getCellNumber() == randCell).findFirst().orElse(null);
             if(existingMine == null){
-                int yPos = randCell / config.getColumns();
-                int xPos = randCell % config.getColumns();
-                Cell newMine = new Cell(CellType.MINE, randCell, xPos, yPos);
+                Cell newMine = new Cell(CellType.MINE, randCell);
                 mines.add(newMine);
             }
         }

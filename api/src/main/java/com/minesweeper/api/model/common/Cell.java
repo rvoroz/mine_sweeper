@@ -4,24 +4,16 @@ public class Cell {
     private CellType cellType;
     private String label;
     private int cellNumber;
-    private int xPos;
-    private int yPos;
     private boolean open;
     private boolean flag;
-    private CellType up;
-    private CellType left;
-    private CellType down;
-    private CellType right;
 
     public Cell(){
         // Empty Constructor
     }
 
-    public Cell(CellType cellType, int cellNumber, int xPos, int yPos) {
+    public Cell(CellType cellType, int cellNumber) {
         this.cellType = cellType;
         this.cellNumber = cellNumber;
-        this.xPos = xPos;
-        this.yPos = yPos;
     }
 
     public CellType getCellType() {
@@ -38,54 +30,6 @@ public class Cell {
 
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public int getxPos() {
-        return xPos;
-    }
-
-    public void setxPos(int xPos) {
-        this.xPos = xPos;
-    }
-
-    public int getyPos() {
-        return yPos;
-    }
-
-    public void setyPos(int yPos) {
-        this.yPos = yPos;
-    }
-
-    public CellType getUp() {
-        return up;
-    }
-
-    public void setUp(CellType up) {
-        this.up = up;
-    }
-
-    public CellType getLeft() {
-        return left;
-    }
-
-    public void setLeft(CellType left) {
-        this.left = left;
-    }
-
-    public CellType getDown() {
-        return down;
-    }
-
-    public void setDown(CellType down) {
-        this.down = down;
-    }
-
-    public CellType getRight() {
-        return right;
-    }
-
-    public void setRight(CellType right) {
-        this.right = right;
     }
 
     public int getCellNumber() {

@@ -1,8 +1,8 @@
 package com.minesweeper.api.service;
 
-import com.minesweeper.api.model.common.Game;
+import com.minesweeper.api.model.common.Field;
 import com.minesweeper.api.model.request.GameRequest;
 
 public interface GameService {
-    public Game startGame(GameRequest gameRequest);
+    public Field startGame(GameRequest gameRequest);
 }

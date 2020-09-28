@@ -17,6 +17,7 @@ public class GameController {
 
     @PostMapping(path = "/start", consumes = "application/json", produces = "application/json")
     public Object start(@RequestBody GameRequest gameRequest){
+        
         return gameService.startGame(gameRequest);
     }
 
