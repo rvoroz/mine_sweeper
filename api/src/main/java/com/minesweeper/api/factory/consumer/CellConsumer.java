@@ -3,8 +3,8 @@ package com.minesweeper.api.factory.consumer;
 import java.util.List;
 import java.util.function.Consumer;
 import com.minesweeper.api.model.common.Cell;
-import com.minesweeper.api.model.common.CellType;
-import com.minesweeper.api.model.common.Compass;
+import com.minesweeper.api.model.common.enums.CellType;
+import com.minesweeper.api.model.common.enums.Compass;
 
 public class CellConsumer implements Consumer<Cell> {
 

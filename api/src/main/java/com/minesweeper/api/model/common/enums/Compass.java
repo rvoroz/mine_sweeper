@@ -1,4 +1,4 @@
-package com.minesweeper.api.model.common;
+package com.minesweeper.api.model.common.enums;
 
 public enum Compass {
     NORTH,

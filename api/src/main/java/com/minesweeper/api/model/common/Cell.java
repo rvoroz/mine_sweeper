@@ -1,5 +1,7 @@
 package com.minesweeper.api.model.common;
 
+import com.minesweeper.api.model.common.enums.CellType;
+
 public class Cell {
     private CellType cellType;
     private String label;

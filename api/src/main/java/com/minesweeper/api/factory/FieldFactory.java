@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.minesweeper.api.factory.consumer.CellConsumer;
 import com.minesweeper.api.model.common.Cell;
-import com.minesweeper.api.model.common.CellType;
+import com.minesweeper.api.model.common.enums.CellType;
 import com.minesweeper.api.model.common.Field;
 import com.minesweeper.api.model.common.Game;
 

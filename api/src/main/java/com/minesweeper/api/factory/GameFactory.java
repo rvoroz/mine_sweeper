@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import com.minesweeper.api.model.common.Cell;
-import com.minesweeper.api.model.common.CellType;
+import com.minesweeper.api.model.common.enums.CellType;
+import com.minesweeper.api.model.common.enums.GameStatus;
 import com.minesweeper.api.model.common.Game;
 import com.minesweeper.api.model.common.GameConfig;
 
@@ -33,6 +34,7 @@ public class GameFactory {
         this.newGame.setId(uuid.toString());
         this.newGame.setMines(this.getMines());
         this.newGame.setStartDate(LocalDateTime.now());
+        this.newGame.setStatus(GameStatus.IN_PROGRESS);
         return this.newGame;
     }
 

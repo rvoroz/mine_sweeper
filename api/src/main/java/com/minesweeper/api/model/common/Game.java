@@ -2,7 +2,7 @@ package com.minesweeper.api.model.common;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import com.minesweeper.api.model.common.enums.GameStatus;
 import org.springframework.data.annotation.Id;
 
 public class Game {
@@ -11,8 +11,10 @@ public class Game {
     private String userId;
     private GameConfig config;
     private LocalDateTime startDate;
+    private LocalDateTime endDateTime;
     private List<Cell> mines;
     private List<Integer> openedCells;
+    private GameStatus status;
 
     public String getId() {
         return id;
@@ -60,6 +62,22 @@ public class Game {
 
     public void setOpenedCells(List<Integer> openedCells) {
         this.openedCells = openedCells;
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
+    }
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
     }
 
     
