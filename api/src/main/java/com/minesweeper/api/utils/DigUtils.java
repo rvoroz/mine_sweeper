@@ -10,7 +10,7 @@ public class DigUtils {
     public static List<Integer> getAdjacentCells(final int currentCell, int rows, int columns) {
         
         int rowPos = (currentCell / columns) + 1;
-        int colPos = currentCell % columns;
+        int colPos = (currentCell % columns) + 1;
         List<Integer> cells = new ArrayList<>();
         for (Compass compass : Compass.values()) {
             switch (compass) {

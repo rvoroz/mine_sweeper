@@ -32,7 +32,7 @@ public class CellConsumer implements Consumer<Cell> {
 
     private void calculateCoords(int currentCell) {
         this.rowPos = (currentCell / this.columns) + 1;
-        this.colPos = currentCell % this.columns;
+        this.colPos = (currentCell % this.columns) + 1;
     }
 
     private int getProximityMines(final int currentCell) {

@@ -111,22 +111,34 @@ public class GameServiceImpl implements GameService {
         List<Integer> openCells = new ArrayList<>();
         List<Integer> queueCells = new ArrayList<>();
         List<Cell> changedCells = new ArrayList<>();
-        openCells.add(cellNumber);
-        queueCells.add(cellNumber);
+        
+        //Add clicked cell
+        Cell fieldCell = field.getCells().stream().filter(f -> f.getCellNumber() == cellNumber 
+                && f.getCellType() == CellType.BLANK && !f.isFlag()).findFirst().orElse(null);
+        if(fieldCell != null){
+            fieldCell.setOpen(true);
+            changedCells.add(fieldCell);
+            openCells.add(cellNumber);
+            if(fieldCell.getLabel().isEmpty()){
+                queueCells.add(cellNumber);
+            }
+        }
 
         while(!queueCells.isEmpty()){
             int queueCell = queueCells.get(0);
             List<Integer> adjacentCells = DigUtils.getAdjacentCells(queueCell, field.getRows(), field.getColumns());
             for(Integer adjacentCell : adjacentCells){
                 if(openCells.contains(adjacentCell)) continue;
-                Cell fieldCell = field.getCells().stream().filter(f -> f.getCellNumber() == adjacentCell 
+                fieldCell = field.getCells().stream().filter(f -> f.getCellNumber() == adjacentCell 
                 && f.getCellType() == CellType.BLANK && !f.isFlag()).findFirst().orElse(null);
 
                 if(fieldCell != null){
                     fieldCell.setOpen(true);
                     changedCells.add(fieldCell);
                     openCells.add(adjacentCell);
-                    queueCells.add(adjacentCell);
+                    if(fieldCell.getLabel().isEmpty()){
+                        queueCells.add(adjacentCell);
+                    }
                 }
             }
             queueCells.remove(0);
