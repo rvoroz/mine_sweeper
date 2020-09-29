@@ -37,6 +37,9 @@ public class FieldFactory {
             if(game.getOpenedCells().contains(i)){
                 newCell.setOpen(true);
             }
+            if(game.getFlaggedCells().contains(i)){
+                newCell.setFlag(true);
+            }
             fieldCells.add(newCell);
         }
 

@@ -1,6 +1,7 @@
 package com.minesweeper.api.model.common;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import com.minesweeper.api.model.common.enums.GameStatus;
 import org.springframework.data.annotation.Id;
@@ -17,6 +18,11 @@ public class Game {
     private List<Integer> openedCells;
     private List<Integer> flaggedCells;
     private GameStatus status;
+
+    public Game(){
+        this.openedCells = new ArrayList<>();
+        this.flaggedCells = new ArrayList<>();
+    }
 
     public String getId() {
         return id;

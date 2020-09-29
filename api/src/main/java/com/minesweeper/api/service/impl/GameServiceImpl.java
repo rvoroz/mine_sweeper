@@ -1,6 +1,9 @@
 package com.minesweeper.api.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.minesweeper.api.factory.FieldFactory;
 import com.minesweeper.api.factory.GameFactory;
 import com.minesweeper.api.model.common.Cell;
@@ -14,6 +17,8 @@ import com.minesweeper.api.model.response.GameResponse;
 import com.minesweeper.api.model.response.PauseResponse;
 import com.minesweeper.api.repository.GameRepository;
 import com.minesweeper.api.service.GameService;
+import com.minesweeper.api.utils.DigUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,8 +96,48 @@ public class GameServiceImpl implements GameService {
         if (game == null || game.getStatus() != GameStatus.IN_PROGRESS)
             return null;
 
+        Cell cell = game.getMines().stream().filter(m -> m.getCellNumber() == cellNumber).findFirst().orElse(null);
+        if(cell != null){
+            cell.setOpen(true);
+            game.setStatus(GameStatus.GAME_OVER);
+            gameRepository.save(game);
+            ActionResponse response = new ActionResponse(game.getId(), game.getStatus());
+            response.getChangedCells().add(cell);
+            return response;
+        }
+        
         final FieldFactory fieldFactory = new FieldFactory();
-        Field field 
+        Field field = fieldFactory.build(game);
+
+        List<Integer> openCells = new ArrayList<>();
+        List<Integer> queueCells = new ArrayList<>();
+        List<Cell> changedCells = new ArrayList<>();
+        openCells.add(cellNumber);
+        queueCells.add(cellNumber);
+
+        while(!queueCells.isEmpty()){
+            int queueCell = queueCells.get(0);
+            List<Integer> adjacentCells = DigUtils.getAdjacentCells(queueCell, field.getRows(), field.getColumns());
+            for(Integer adjacentCell : adjacentCells){
+                if(openCells.contains(adjacentCell)) continue;
+                Cell fieldCell = field.getCells().stream().filter(f -> f.getCellNumber() == adjacentCell 
+                && f.getCellType() == CellType.BLANK && !f.isFlag()).findFirst().orElse(null);
+
+                if(fieldCell != null){
+                    fieldCell.setOpen(true);
+                    changedCells.add(fieldCell);
+                    openCells.add(adjacentCell);
+                    queueCells.add(adjacentCell);
+                }
+            }
+            queueCells.remove(0);
+        }
+         game.getOpenedCells().addAll(openCells);
+         gameRepository.save(game);
+
+        ActionResponse response = new ActionResponse(game.getId(), game.getStatus());
+        response.setChangedCells(changedCells);
+        return response;
     }
 
 }

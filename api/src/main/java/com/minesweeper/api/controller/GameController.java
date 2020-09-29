@@ -46,7 +46,9 @@ public class GameController {
 
     @PutMapping(path = "/dig", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ActionResponse> dig(@RequestBody ActionRequest digRequest){
-        return ResponseEntity.notFound().build();
+        ActionResponse response = gameService.digCell(digRequest.getGameId(), digRequest.getCellNumber());
+        if(response == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping(path = "/flag", consumes = "application/json", produces = "application/json")

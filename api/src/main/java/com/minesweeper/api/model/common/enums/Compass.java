@@ -8,5 +8,5 @@ public enum Compass {
     SOUTH,
     SOUTH_WEST,
     WEST,
-    NORTH_WEST
+    NORTH_WEST;
 }
