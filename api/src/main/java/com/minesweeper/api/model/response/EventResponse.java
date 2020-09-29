@@ -3,8 +3,6 @@ package com.minesweeper.api.model.response;
 import java.time.LocalDateTime;
 import com.minesweeper.api.model.common.enums.GameStatus;
 
-import org.springframework.jca.support.LocalConnectionFactoryBean;
-
 public class EventResponse {
     private String id;
     private LocalDateTime pauseDate;
