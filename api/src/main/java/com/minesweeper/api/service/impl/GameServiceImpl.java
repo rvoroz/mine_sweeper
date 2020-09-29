@@ -144,6 +144,10 @@ public class GameServiceImpl implements GameService {
             queueCells.remove(0);
         }
          game.getOpenedCells().addAll(openCells);
+         if(this.checkGameFinished(field)){
+            game.setEndDateTime(LocalDateTime.now());
+            game.setStatus(GameStatus.COMPLETED);
+         }
          gameRepository.save(game);
 
         ActionResponse response = new ActionResponse(game.getId(), game.getStatus());
@@ -162,6 +166,10 @@ public class GameServiceImpl implements GameService {
         gameRepository.save(game);
 
         return new EventResponse(game.getId(), null, game.getEndDateTime(), game.getStatus());
+    }
+
+    private boolean checkGameFinished(Field field){
+        return field.getCells().stream().filter(f->f.getCellType() == CellType.BLANK && !f.isOpen()).count() == 0;
     }
 
 }
