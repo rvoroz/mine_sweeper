@@ -15,7 +15,7 @@ import com.minesweeper.api.model.request.ActionRequest;
 import com.minesweeper.api.model.request.GameRequest;
 import com.minesweeper.api.model.response.ActionResponse;
 import com.minesweeper.api.model.response.GameResponse;
-import com.minesweeper.api.model.response.PauseResponse;
+import com.minesweeper.api.model.response.EventResponse;
 import com.minesweeper.api.service.GameService;
 
 @RestController
@@ -31,8 +31,8 @@ public class GameController {
     }
 
     @GetMapping(path = "/pause/{gameId}", produces = "application/json")
-    public ResponseEntity<PauseResponse> pause(@PathVariable("gameId") String gameId){
-        PauseResponse response = gameService.pauseGame(gameId);
+    public ResponseEntity<EventResponse> pause(@PathVariable("gameId") String gameId){
+        EventResponse response = gameService.pauseGame(gameId);
         if(response == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(response);
     }
@@ -58,9 +58,11 @@ public class GameController {
         return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(path = "/end", method = RequestMethod.GET)
-    public String end(){
-        return "game ended";
+    @GetMapping(path = "/end/{gameId}", produces = "application/json")
+    public ResponseEntity<EventResponse> end(@PathVariable("gameId") String gameId){
+        EventResponse response = gameService.endGame(gameId);
+        if(response == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 
 }

@@ -3,7 +3,6 @@ package com.minesweeper.api.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.minesweeper.api.factory.FieldFactory;
 import com.minesweeper.api.factory.GameFactory;
 import com.minesweeper.api.model.common.Cell;
@@ -14,7 +13,7 @@ import com.minesweeper.api.model.common.enums.GameStatus;
 import com.minesweeper.api.model.request.GameRequest;
 import com.minesweeper.api.model.response.ActionResponse;
 import com.minesweeper.api.model.response.GameResponse;
-import com.minesweeper.api.model.response.PauseResponse;
+import com.minesweeper.api.model.response.EventResponse;
 import com.minesweeper.api.repository.GameRepository;
 import com.minesweeper.api.service.GameService;
 import com.minesweeper.api.utils.DigUtils;
@@ -40,7 +39,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public PauseResponse pauseGame(String gameId) {
+    public EventResponse pauseGame(String gameId) {
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game == null || game.getStatus() != GameStatus.IN_PROGRESS)
             return null;
@@ -48,7 +47,7 @@ public class GameServiceImpl implements GameService {
         game.setPauseDate(LocalDateTime.now());
         game.setStatus(GameStatus.PAUSED);
         gameRepository.save(game);
-        return new PauseResponse(game.getId(), game.getPauseDate(), game.getStatus());
+        return new EventResponse(game.getId(), game.getPauseDate(), null, game.getStatus());
     }
 
     @Override
@@ -138,6 +137,19 @@ public class GameServiceImpl implements GameService {
         ActionResponse response = new ActionResponse(game.getId(), game.getStatus());
         response.setChangedCells(changedCells);
         return response;
+    }
+
+    @Override
+    public EventResponse endGame(String gameId) {
+        Game game = gameRepository.findById(gameId).orElse(null);
+        if (game == null || game.getStatus() != GameStatus.GAME_OVER || game.getStatus() != GameStatus.COMPLETED)
+            return null;
+        
+        game.setEndDateTime(LocalDateTime.now());
+        game.setStatus(GameStatus.GAME_OVER);
+        gameRepository.save(game);
+
+        return new EventResponse(game.getId(), null, game.getEndDateTime(), game.getStatus());
     }
 
 }
