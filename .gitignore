@@ -12,6 +12,7 @@
 target/
 .vscode/
 .settings/
+.node_modules/
 
 # Package Files #
 *.jar
