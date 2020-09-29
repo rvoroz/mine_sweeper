@@ -6,11 +6,13 @@ public class GameResponse {
     private String id;
     private String userId;
     private Field field;
+    private String error;
 
-    public GameResponse(String id, String userId, Field field) {
+    public GameResponse(String id, String userId, Field field, String error) {
         this.id = id;
         this.userId = userId;
         this.field = field;
+        this.error = error;
     }
 
     public String getId() {
@@ -36,6 +38,14 @@ public class GameResponse {
     public void setField(Field field) {
         this.field = field;
     }
-    
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+    
+    
 }

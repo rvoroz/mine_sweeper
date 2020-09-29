@@ -31,11 +31,16 @@ public class GameServiceImpl implements GameService {
         final GameFactory gameFactory = new GameFactory();
         final FieldFactory fieldFactory = new FieldFactory();
 
+        if(!gameRequest.getGameConfig().isValid()){
+            return new GameResponse(null, null, null, "Invalid Game. Few empty rows");
+        }
+
         Game newGame = gameFactory.setUserId(gameRequest.getUserId()).setGameConfig(gameRequest.getGameConfig())
                 .build();
+
         gameRepository.save(newGame);
         Field newField = fieldFactory.build(newGame);
-        return new GameResponse(newGame.getId(), newGame.getUserId(), newField);
+        return new GameResponse(newGame.getId(), newGame.getUserId(), newField, null);
     }
 
     @Override
@@ -60,7 +65,7 @@ public class GameServiceImpl implements GameService {
         gameRepository.save(game);
         final FieldFactory fieldFactory = new FieldFactory();
         Field field = fieldFactory.build(game);
-        return new GameResponse(game.getId(), game.getUserId(), field);
+        return new GameResponse(game.getId(), game.getUserId(), field, null);
     }
 
     @Override
@@ -82,7 +87,7 @@ public class GameServiceImpl implements GameService {
                 cell.setFlag(true);
             } 
         }
-
+        gameRepository.save(game);
         ActionResponse actionResponse = new ActionResponse(game.getId(), game.getStatus());
         actionResponse.getChangedCells().add(cell);
 
@@ -158,7 +163,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public EventResponse endGame(String gameId) {
         Game game = gameRepository.findById(gameId).orElse(null);
-        if (game == null || game.getStatus() != GameStatus.GAME_OVER || game.getStatus() != GameStatus.COMPLETED)
+        if (game == null || game.getStatus() == GameStatus.GAME_OVER || game.getStatus() == GameStatus.COMPLETED)
             return null;
         
         game.setEndDateTime(LocalDateTime.now());

@@ -29,14 +29,14 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping(path = "/pause/{gameId}", produces = "application/json")
+    @PutMapping(path = "/pause/{gameId}", produces = "application/json")
     public ResponseEntity<EventResponse> pause(@PathVariable("gameId") String gameId){
         EventResponse response = gameService.pauseGame(gameId);
         if(response == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(path = "/resume/{gameId}", produces = "application/json")
+    @PutMapping(path = "/resume/{gameId}", produces = "application/json")
     public ResponseEntity<GameResponse> resume(@PathVariable("gameId") String gameId){
         GameResponse response = gameService.resumeGame(gameId);
         if(response == null) return ResponseEntity.notFound().build();
