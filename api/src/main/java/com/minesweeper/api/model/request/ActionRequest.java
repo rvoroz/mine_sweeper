@@ -1,8 +1,7 @@
 package com.minesweeper.api.model.request;
 
-public class DigRequest {
+public class ActionRequest {
     private String gameId;
-    private String userId;
     private int cellNumber;
 
     public String getGameId() {
@@ -11,14 +10,6 @@ public class DigRequest {
 
     public void setGameId(String gameId) {
         this.gameId = gameId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public int getCellNumber() {

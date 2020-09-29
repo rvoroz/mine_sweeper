@@ -15,6 +15,7 @@ public class Game {
     private LocalDateTime endDateTime;
     private List<Cell> mines;
     private List<Integer> openedCells;
+    private List<Integer> flaggedCells;
     private GameStatus status;
 
     public String getId() {
@@ -87,6 +88,14 @@ public class Game {
 
     public void setPauseDate(LocalDateTime pauseDate) {
         this.pauseDate = pauseDate;
+    }
+
+    public List<Integer> getFlaggedCells() {
+        return flaggedCells;
+    }
+
+    public void setFlaggedCells(List<Integer> flaggedCells) {
+        this.flaggedCells = flaggedCells;
     }
 
     

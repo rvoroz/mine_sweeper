@@ -3,12 +3,12 @@ package com.minesweeper.api.model.response;
 import java.time.LocalDateTime;
 import com.minesweeper.api.model.common.enums.GameStatus;
 
-public class PauseResumeResponse {
+public class PauseResponse {
     private String id;
     private LocalDateTime pauseDate;
     private GameStatus status;
 
-    public PauseResumeResponse(String id, LocalDateTime pauseDate, GameStatus status) {
+    public PauseResponse(String id, LocalDateTime pauseDate, GameStatus status) {
         this.id = id;
         this.pauseDate = pauseDate;
         this.status = status;
