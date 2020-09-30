@@ -27,6 +27,12 @@ public class GameServiceHelper {
         return game;
     }
 
+    public static List<Game> getGames(GameStatus status, int mines) {
+        List<Game> games = new ArrayList<>();
+        games.add(GameServiceHelper.getGame(status, mines));
+        return games;
+    }
+
     public static GameConfig getGameConfig(int mines) {
         GameConfig config = new GameConfig();
         config.setRows(3);

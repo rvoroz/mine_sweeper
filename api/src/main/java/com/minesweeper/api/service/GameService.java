@@ -1,5 +1,7 @@
 package com.minesweeper.api.service;
 
+import java.util.List;
+
 import com.minesweeper.api.model.request.GameRequest;
 import com.minesweeper.api.model.response.ActionResponse;
 import com.minesweeper.api.model.response.GameResponse;
@@ -12,4 +14,6 @@ public interface GameService {
     public ActionResponse flagCell(String gameId, int cellNumber);
     public ActionResponse digCell(String gameId, int cellNumber);
 	public EventResponse endGame(String gameId);
+	public GameResponse getGameById(String gameId);
+	public List<EventResponse> getGamesByUserId(String userId);
 }

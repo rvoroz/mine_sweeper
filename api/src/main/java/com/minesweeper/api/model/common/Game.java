@@ -13,7 +13,7 @@ public class Game {
     private GameConfig config;
     private LocalDateTime startDate;
     private LocalDateTime pauseDate;
-    private LocalDateTime endDateTime;
+    private LocalDateTime endDate;
     private List<Cell> mines;
     private List<Integer> openedCells;
     private List<Integer> flaggedCells;
@@ -72,12 +72,12 @@ public class Game {
         this.openedCells = openedCells;
     }
 
-    public LocalDateTime getEndDateTime() {
-        return endDateTime;
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setEndDate(LocalDateTime endDateTime) {
+        this.endDate = endDateTime;
     }
 
     public GameStatus getStatus() {

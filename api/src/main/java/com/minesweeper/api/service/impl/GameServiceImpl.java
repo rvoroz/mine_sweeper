@@ -17,7 +17,6 @@ import com.minesweeper.api.model.response.EventResponse;
 import com.minesweeper.api.repository.GameRepository;
 import com.minesweeper.api.service.GameService;
 import com.minesweeper.api.utils.DigUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class GameServiceImpl implements GameService {
         final FieldFactory fieldFactory = new FieldFactory();
 
         if(!gameRequest.getGameConfig().isValid()){
-            return new GameResponse(null, null, null, "Invalid Game. Few empty rows");
+            return new GameResponse(null, null, null, null, "Invalid Game. Few empty rows");
         }
 
         Game newGame = gameFactory.setUserId(gameRequest.getUserId()).setGameConfig(gameRequest.getGameConfig())
@@ -40,7 +39,7 @@ public class GameServiceImpl implements GameService {
 
         gameRepository.save(newGame);
         Field newField = fieldFactory.build(newGame);
-        return new GameResponse(newGame.getId(), newGame.getUserId(), newField, null);
+        return new GameResponse(newGame.getId(), newGame.getUserId(), newField, newGame.getStatus(), null);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class GameServiceImpl implements GameService {
         game.setPauseDate(LocalDateTime.now());
         game.setStatus(GameStatus.PAUSED);
         gameRepository.save(game);
-        return new EventResponse(game.getId(), game.getPauseDate(), null, game.getStatus());
+        return new EventResponse(game.getId(), game.getStartDate(), game.getPauseDate(), null, game.getStatus());
     }
 
     @Override
@@ -65,7 +64,7 @@ public class GameServiceImpl implements GameService {
         gameRepository.save(game);
         final FieldFactory fieldFactory = new FieldFactory();
         Field field = fieldFactory.build(game);
-        return new GameResponse(game.getId(), game.getUserId(), field, null);
+        return new GameResponse(game.getId(), game.getUserId(), field, game.getStatus(), null);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class GameServiceImpl implements GameService {
         } else {
             cell = new Cell(CellType.BLANK, cellNumber);
             if(game.getFlaggedCells().contains(cellNumber)) {
-                game.getFlaggedCells().remove(cellNumber);
+                game.getFlaggedCells().remove(new Integer(cellNumber));
                 cell.setFlag(false);
             } else {
                 game.getFlaggedCells().add(cellNumber);
@@ -150,7 +149,7 @@ public class GameServiceImpl implements GameService {
         }
          game.getOpenedCells().addAll(openCells);
          if(this.checkGameFinished(field)){
-            game.setEndDateTime(LocalDateTime.now());
+            game.setEndDate(LocalDateTime.now());
             game.setStatus(GameStatus.COMPLETED);
          }
          gameRepository.save(game);
@@ -166,15 +165,40 @@ public class GameServiceImpl implements GameService {
         if (game == null || game.getStatus() == GameStatus.GAME_OVER || game.getStatus() == GameStatus.COMPLETED)
             return null;
         
-        game.setEndDateTime(LocalDateTime.now());
+        game.setEndDate(LocalDateTime.now());
         game.setStatus(GameStatus.GAME_OVER);
         gameRepository.save(game);
 
-        return new EventResponse(game.getId(), null, game.getEndDateTime(), game.getStatus());
+        return new EventResponse(game.getId(), game.getStartDate(), null, game.getEndDate(), game.getStatus());
     }
 
     private boolean checkGameFinished(Field field){
         return field.getCells().stream().filter(f->f.getCellType() == CellType.BLANK && !f.isOpen()).count() == 0;
+    }
+
+    @Override
+    public GameResponse getGameById(String gameId) {
+        Game game = gameRepository.findById(gameId).orElse(null);
+        if (game == null)
+            return null;
+
+        final FieldFactory fieldFactory = new FieldFactory();
+        Field field = fieldFactory.build(game);
+        return new GameResponse(game.getId(), game.getUserId(), field, game.getStatus(), null);
+    }
+
+    @Override
+    public List<EventResponse> getGamesByUserId(String userId) {
+        List<Game> games = gameRepository.findByUserId(userId);
+        if (games == null || games.isEmpty())
+            return null;
+        
+        List<EventResponse> response = new ArrayList<>();
+        for(Game game : games){
+            response.add(new EventResponse(game.getId(), game.getStartDate(), game.getPauseDate(), game.getEndDate(), game.getStatus()));
+        }     
+
+        return response;
     }
 
 }

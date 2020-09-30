@@ -8,6 +8,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.List;
 import java.util.Optional;
 import com.minesweeper.api.model.common.Game;
 import com.minesweeper.api.model.common.enums.CellType;
@@ -46,7 +48,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void shouldFailWithInvalidGameError() {
+    public void shouldFailCreatingWithInvalidGameError() {
         GameRequest request = GameServiceHelper.getGameRequest(7);
         GameResponse gameResponse = this.gameService.startGame(request);
         verify(gameRepository, never()).save(any(Game.class));
@@ -173,6 +175,40 @@ public class GameServiceTests {
         ActionResponse response = gameService.digCell(game.getId(), 1);
         verify(gameRepository).findById(anyString());
         verify(gameRepository, never()).save(any(Game.class));
+        assertNull(response);
+    }
+
+    @Test
+    public void shouldGetGameByIdCorrectly() {
+        Game game = GameServiceHelper.getGame(GameStatus.PAUSED, 2);
+        when(gameRepository.findById(anyString())).thenReturn(Optional.of(game));
+        GameResponse response = gameService.getGameById(game.getId());
+        verify(gameRepository).findById(anyString());
+        assertNotNull(response.getField());
+        assertEquals(game.getId(), response.getId());
+    }
+
+    @Test
+    public void shouldReturnErrorOnGetGameByIdWithNonExistentGame() {
+        GameResponse response = gameService.getGameById("321");
+        verify(gameRepository).findById(anyString());
+        assertNull(response);
+    }
+
+    @Test
+    public void shouldGetGameListByUserIdCorrectly() {
+        List<Game> games = GameServiceHelper.getGames(GameStatus.PAUSED, 2);
+        when(gameRepository.findByUserId(anyString())).thenReturn(games);
+        List<EventResponse> response = gameService.getGamesByUserId("123456");
+        verify(gameRepository).findByUserId(anyString());
+        assertNotNull(response);
+        assertEquals(1, response.size());
+    }
+
+    @Test
+    public void shouldReturnErrorOnGetGameListByUserIdWithNonExistentGame() {
+        List<EventResponse> response = gameService.getGamesByUserId("321");
+        verify(gameRepository).findByUserId(anyString());
         assertNull(response);
     }
 }
