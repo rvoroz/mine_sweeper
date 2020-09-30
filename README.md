@@ -19,12 +19,19 @@ API Url: http://ec2-54-187-86-211.us-west-2.compute.amazonaws.com:8080
 Endpoints:
 
 POST game/start
+
 PUT game/pause/{gameId}
+
 PUT game/resume/{gameId}
+
 GET game/{gameId}
+
 GET game/user/{userId}
+
 PUT game/dig/
+
 PUT game/flag
+
 PUT game/end
 
 
