@@ -12,7 +12,6 @@
 target/
 .vscode/
 .settings/
-.node_modules/
 
 # Package Files #
 *.jar
@@ -29,3 +28,7 @@ hs_err_pid*
 # Project Files
 .classpath
 .project
+lib/node_modules/
+lib/src/api/core/*.js
+lib/src/api/*.js
+lib/src/*.js

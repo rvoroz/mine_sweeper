@@ -2,7 +2,7 @@ import ActionResponse from "./core/action.response";
 import EventResponse from "./core/event.response";
 import GameRequest from "./core/game.request";
 import GameResponse from "./core/game.response";
-import * as fetch from "node-fetch"
+import fetch from "node-fetch";
 
 interface IMineSweeperClient {
     startGame(request: GameRequest): Promise<GameResponse>
@@ -31,9 +31,9 @@ class MineSweeperClient {
     public async resumeGame(gameId: string): Promise<GameResponse> {
         return JSON.parse(await this.fetchData(`game/resume/${gameId}`, 'put', null, {}));
     }
-    
+
     public async flagCell(gameId: string, cellNumber: number): Promise<ActionResponse> {
-        return JSON.parse(await this.fetchData('game/flag', 'put', {gameId, cellNumber}, {'Content-Type': 'application/json'}));
+        return JSON.parse(await this.fetchData('game/flag', 'put', {gameId, cellNumber}, { 'Content-Type': 'application/json' }));
     }
 
     public async digCell(gameId: string, cellNumber: number): Promise<ActionResponse> {
@@ -49,7 +49,7 @@ class MineSweeperClient {
         const res: any = await fetch(url, {
             method: verb,
             body: request ? JSON.stringify(request) : '',
-            headers: headers
+            headers
         });
 
         if (res.ok) {
