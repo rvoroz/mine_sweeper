@@ -1,0 +1,24 @@
+<div>
+    <a (click)="goBack()" href="#">Go Back</a>
+    <br/>
+    <br/>
+    <span style="padding-right: 10px;"><button (click)="pauseGame()">Pause Game</button></span><span><button  (click)="resumeGame()">Resume Game</button></span>
+</div>
+<div style="height:25px"></div>
+<div>
+    <input type="radio" value="dig" [(ngModel)]="actionType">Dig
+    <input type="radio" value="flag" [(ngModel)]="actionType">Flag
+</div>
+<table>
+    <tr *ngFor="let row of field">
+        <td *ngFor="let c of row">
+            <img *ngIf="c.open && c.label == ''" (click)="actionCell(c.cellNumber)" src="/assets/images/open_cell.png">
+            <button *ngIf="c.open && c.label != '' && c.cellType != 'MINE'" (click)="actionCell(c.cellNumber)" style="border:0; width:32px; height:32px; background-color:#b9b9b9">{{c.label}}</button>
+            <img *ngIf="!c.open && !c.flag" (click)="actionCell(c.cellNumber)" src="/assets/images/cell.png">
+            <img *ngIf="c.flag" (click)="actionCell(c.cellNumber)" src="/assets/images/flag.png">
+            <img *ngIf="c.open && !c.flag && c.cellType == 'MINE'" src="/assets/images/bomb.png">
+        </td>
+    </tr>
+</table>
+<hr />
+<label >Game Status: {{status}}</label>

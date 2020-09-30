@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from './../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
-  private gameUrl = 'http://ec2-54-187-86-211.us-west-2.compute.amazonaws.com:8080';  // URL to web api
+  gameUrl;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient) {
+        this.gameUrl = environment.apiUrl;
+     }
 
   createGame(request: any): Observable<any> {
     return this.http.post(`${this.gameUrl}/game/start`, request, this.httpOptions)
@@ -24,7 +27,7 @@ export class GameService {
       .pipe();
   }
 
-  getGameList(userId: number): Observable<any> {
+  getGameList(userId: string): Observable<any> {
     return this.http.get(`${this.gameUrl}/game/user/${userId}`)
       .pipe();
   }
