@@ -10,16 +10,50 @@ import { GameService } from "../game.service";
 export class GameListComponent implements OnInit {
 
   userId: string;
-  game: any;
+  rows: number;
+  columns: number;
+  mines: number;
+  games: any;
 
   constructor(private router: Router, private gameService: GameService){}
 
   ngOnInit(): void {
   }
 
-  startGame() {
-    this.router.navigate(["/game"])
+  createGame() {
+    if(!this.userId || !this.rows || !this.columns || !this.mines){
+      alert("Please enter all fields ");
+      return
+    }
+    const request = {
+      userId: this.userId,
+      gameConfig: {
+        rows: this.rows,
+        columns: this.columns,
+        mines: this.mines
+      }
+    };
+    this.gameService.createGame(request).subscribe(data => {
+      if(data.error){
+        alert(data.error);
+        return;
+      }
+      this.router.navigate(["/game"], { queryParams: { gameId: data.id }})
+    })
   }
 
-  
+  searchGames() {
+    if(!this.userId){
+      alert("Please enter your nickname first ");
+      return
+    }
+
+    this.gameService.getGameList(this.userId).subscribe(data =>{
+      this.games = data;
+    });
+  }
+
+  continueGame(gameId: number){
+    this.router.navigate(["/game"], { queryParams: { gameId: gameId }})
+  }
 }

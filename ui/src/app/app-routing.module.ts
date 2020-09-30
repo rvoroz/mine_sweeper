@@ -4,6 +4,7 @@ import { GameComponent } from "./game/game.component"
 import { GameListComponent } from "./game-list/game-list.component"
 
 const routes: Routes = [
+  { path: '', redirectTo: "/game-list", pathMatch: "full" },
   { path: 'game-list', component: GameListComponent },
   { path: 'game', component: GameComponent }
 ];

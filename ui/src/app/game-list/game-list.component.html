@@ -1,6 +1,39 @@
-<h2>Input your nickname</h2>
+<h2>Input the game data</h2>
 <div>
-    <p><input type="text" [(ngModel)]="userId"></p>
-            <button (click)="startGame()">StartGame</button>
+    <table>
+        <tr>
+            <td>Nickname</td>
+            <td><input type="text" [(ngModel)]="userId"></td>
+            <td><button (click)="searchGames()">Search Games</button></td>
+        </tr>
+    </table> 
+    <h2>New Game</h2>
+    <table>
+        <tr>
+            <td>Rows</td>
+            <td><input type="text" [(ngModel)]="rows"></td>
+        </tr>
+        <tr>
+            <td>Columns</td>
+            <td><input type="text" [(ngModel)]="columns"></td>
+        </tr>
+        <tr>
+            <td>Mines</td>
+            <td><input type="text" [(ngModel)]="mines"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button (click)="createGame()">StartGame</button></td>
+        </tr>
+    </table>  
+    <hr/>
+    <table border="1">
+        <tr *ngFor="let g of games">
+            <td>{{g.id}}</td>
+            <td>{{g.startDate}}</td>
+            <td>{{g.status}}</td>
+            <td><button *ngIf="g.status != 'GAME_OVER' && g.status != 'COMPLETED'" (click)="continueGame(g.id)">Continue</button></td>
+        </tr>
+    </table> 
 </div>
             
