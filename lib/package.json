@@ -2,11 +2,14 @@
   "name": "minesweeper_lib",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "source": "index.ts",
-  "module": "index.js",
-  "types": "index.d.ts",
-  "scripts": {},
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "module": "dist/index.js",
+  "files": ["dist/**/*"],
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint -p \"tsconfig.json\""
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
